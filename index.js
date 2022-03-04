@@ -1,6 +1,5 @@
-// to handle the input autocomplete, the fetch data
-createAutoComplete({
-  root: document.querySelector(".autocomplete"),
+// object with functions to handle the input autocomplete, the fetch data
+const autoCompleteConfig = {
   renderOption(movie) {
     const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
     return `
@@ -26,6 +25,16 @@ createAutoComplete({
     }
     return response.data.Search;
   },
+};
+// spread the autoCompleteConfig object and make it happen inside of the #left-autocomplete
+createAutoComplete({
+  ...autoCompleteConfig,
+  root: document.querySelector("#left-autocomplete"),
+});
+
+createAutoComplete({
+  ...autoCompleteConfig,
+  root: document.querySelector("#right-autocomplete"),
 });
 
 // get more info of the selected movie
