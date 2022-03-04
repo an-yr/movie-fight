@@ -1,17 +1,4 @@
-const fetchData = async (movieSearched) => {
-  const response = await axios.get("http://www.omdbapi.com/", {
-    params: {
-      apikey: "7f36c176",
-      s: movieSearched,
-    },
-  });
-  if (response.data.Error) {
-    return [];
-  }
-  return response.data.Search;
-};
-
-// the input and the autocomplete function
+// to handle the input autocomplete, the fetch data
 createAutoComplete({
   root: document.querySelector(".autocomplete"),
   renderOption(movie) {
@@ -20,6 +7,24 @@ createAutoComplete({
       <img src="${imgSrc}" />
       ${movie.Title} (${movie.Year})
     `;
+  },
+  onOptionSelect(movie) {
+    onMovieSelect(movie);
+  },
+  inputValue(movie) {
+    return movie.Title;
+  },
+  async fetchData(movieSearched) {
+    const response = await axios.get("http://www.omdbapi.com/", {
+      params: {
+        apikey: "7f36c176",
+        s: movieSearched,
+      },
+    });
+    if (response.data.Error) {
+      return [];
+    }
+    return response.data.Search;
   },
 });
 
